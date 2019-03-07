@@ -1,20 +1,33 @@
 // Guardamos en variables las dependencias que vamos a necesitar
-var gulp = require('gulp');
-var watch = require('gulp-watch');
-var sass = require('gulp-sass');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const browserSync = require('browser-sync').create();
 
-//Creamos una tarea que compila sass
-gulp.task('sass', function () {
+
+sass.complier = require('node-sass')
+
+function style() {
   return gulp.src('./sass/**/*.sass') // elegimos la fuente (el archivo sass)
-    .pipe(sass()) //compilamos esa fuente en css
-    .pipe(gulp.dest('./stylesheets')); //enviamos esa compilación a un nuevo directorio
-});
+    .pipe(sass().on('error', sass.logError)) //compilamos esa fuente en css
+    .pipe(gulp.dest('./stylesheets')) //enviamos esa compilación a un nuevo directorio
+    .pipe(browserSync.stream()); //observa los cambios en todos los navegadores
+}
 
-// La tarea Watch vigila los cambios en los archivos sass, y corre el preprocesador con la tarea “sass” y recarga la información.
-gulp.task('watch-sass', function() {
-   gulp.watch("./sass/**/*.sass", ['sass']);
-    //Basicamente, watch vigila, el primer argumento indica donde vigilar y el segundo (la
-    //tarea) que hacer cuando algo cambia.
+function watch() {
+  browserSync.init({
+    server: {
+      baseDir:'./'
+    }
   });
-//Vuelve a ejecutar la tarea cuando se modifica algún archivo
-gulp.task('default', ['watch-sass']);
+  gulp.watch('./sass/**/*.sass', style);
+  gulp.watch('./*html').on('change', browserSync.reload);
+  //si usamos js
+  //gulp.watch('./js/**/*.js').on('change', browserSync.reload);
+}
+
+//Si exportamos style compilamos nuestro sass
+exports.style = style;
+//Si exportamos watch creamos un navegador que actualiza nuestros cambios
+exports.watch = watch;
+//Es como watch, solo que basta con ejecutar "gulp" en la terminal
+exports.default = watch;
