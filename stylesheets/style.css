@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   height: 80px;
-  background-color: grey; }
+  background-color: white; }
   .header__logotype {
     width: 230px;
     background-color: blue;
@@ -17,3 +17,44 @@
       padding: 0px;
       display: inline-block;
       width: 100px; }
+  .header__contact {
+    width: 250px;
+    float: right;
+    margin: 20px 0 0 0; }
+    .header__contact p {
+      margin: 0;
+      padding: 0;
+      display: inline-block; }
+
+.auxiliar {
+  width: 100%;
+  height: 50px;
+  background-color: darkgray;
+  padding-left: 10px; }
+  .auxiliar i {
+    margin: 20px 5px 0 5px; }
+  .auxiliar a {
+    margin: 20px 5px 0 5px; }
+
+.portada {
+  width: 100%;
+  height: 400px;
+  background-color: cyan; }
+  .portada__muestra {
+    width: 400px;
+    height: 150px;
+    background-color: red;
+    margin: 100px 0 0 100px;
+    display: inline-block;
+    padding: 30px 0 0 50px; }
+    .portada__muestra h3 {
+      font-size: 40px;
+      margin: 0; }
+    .portada__muestra p {
+      margin: 30px 0 0 0;
+      padding: 0; }
+      .portada__muestra p:before {
+        content: "|";
+        margin-right: 5px;
+        font-size: 20px;
+        color: yellow; }
